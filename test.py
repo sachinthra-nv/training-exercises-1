@@ -1,0 +1,1 @@
+print(type({}) is list or type({}) is dict)

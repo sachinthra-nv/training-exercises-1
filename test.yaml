@@ -1,6 +1,8 @@
 UserName: Alicia
 Password: pinga123 * 
 phone: 3256
+image: Image is the name of the image with the embedded disk.
+imagePullPolicy: Image pull policy.
 TablesList:
       -EmployeeTable
       -SoftwaresList
