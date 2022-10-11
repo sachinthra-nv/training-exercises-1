@@ -11,9 +11,16 @@ def findImageTag(dc,keys):
         if(type(dc[i]) is dict):
             # print(dc[i])
             newKeys = list(dc[i].keys())
-            print(newKeys)
+            # print(newKeys)
             if 'image' in newKeys:
-                print(dc[i])
+                print("woooooow: ",dc[i]['image'])
             findImageTag(dc[i],newKeys)
+        elif type(dc[i]) is list:
+            for j in dc[i]:
+                if type(j) is not str:
+                    newKeys = list(j.keys())
+                    if 'image' in newKeys:
+                        print("wooooooow: ",j['image'])
+                    findImageTag(j,newKeys)
         
     return
