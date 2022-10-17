@@ -3,9 +3,6 @@
 # cat src/data/final.yaml | grep imagePullPolicy: | wc -l
 # cat src/data/capk.yaml | grep imagePullPolicy: | wc -l
 
-ut1
-echo \\n
-ut2
 
 function ut1() {
 
@@ -37,3 +34,7 @@ function ut2() {
     fi
 
 }
+
+ut1
+echo \\n
+ut2
