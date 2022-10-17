@@ -14,7 +14,7 @@ def main():
 
             v = MyYaml(len(lines), lines)
             lines = v.findTags('image:')
-            with open('final.yaml', 'w') as f:
+            with open('src/data/final.yaml', 'w') as f:
                 f.writelines(lines)
             # findTags('image:', lines)
 
