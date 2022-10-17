@@ -47,7 +47,7 @@ class MyYaml:
     def matchNextTag(self, tag="imagePullPolicy:"):
         line = self.lines[self.index]
         if tag in line:
-            print("\n"," "*4,"- It is a imagePullPolicy tag:",end="")
+            print("\n"," "*4,"- It is a imagePullPolicy tag",end="")
             if line.strip() == tag:
                 print("\n"," "*4,"It has sub tags",end="")
                 self.changeValueOfTagCase1()
@@ -72,7 +72,8 @@ class MyYaml:
             # line = self.lines[i]
             self.lines.pop(self.index)
             line = self.lines[self.index]
-            # self.totalLen -= 1
+        self.index -= 1
+        
 
     # case 2
     #   if imagePullPolicy not present
@@ -96,8 +97,9 @@ class MyYaml:
     def isImageTagLink(self):
         s = self.lines[self.index]
         st = s[self.findFrontSpace(s)+7:]
-        # print(st)
+        # print("\n",st)
         if re.match('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{4,5}', st) != None:
+            # print(True)
             return True
         else:
             return False
