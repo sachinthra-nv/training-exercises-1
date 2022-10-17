@@ -7,7 +7,8 @@
     "test1": "echo \"Error: no test specified\" && exit 1",
     "start": "python3 src/app.py src/data/capk.yaml",
     "dev": "python3 src/temp/app3.py",
-    "test" : "python3 src/temp/test.py"
+    "testpy": "python3 src/temp/test.py",
+    "test": "chmod +x testing/test.sh && testing/test.sh"
   },
   "repository": {
     "type": "git",
