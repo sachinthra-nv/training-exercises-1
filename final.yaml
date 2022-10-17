@@ -3229,7 +3229,13 @@ spec:
                                                 description: Image that contains initrd
                                                   / kernel files.
                                                 type: string
-                                              imagePullPolicy: IfNotPresent
+                                              imagePullPolicy:
+                                                description: 'Image pull policy. One
+                                                  of Always, Never, IfNotPresent.
+                                                  Defaults to Always if :latest tag
+                                                  is specified, or IfNotPresent otherwise.
+                                                  Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images'
+                                                type: string
                                               imagePullSecret:
                                                 description: ImagePullSecret is the
                                                   name of the Docker registry secret
@@ -3902,7 +3908,13 @@ spec:
                                           description: Image is the name of the image
                                             with the embedded disk.
                                           type: string
-                                        imagePullPolicy: IfNotPresent
+                                        imagePullPolicy:
+                                          description: 'Image pull policy. One of
+                                            Always, Never, IfNotPresent. Defaults
+                                            to Always if :latest tag is specified,
+                                            or IfNotPresent otherwise. Cannot be updated.
+                                            More info: https://kubernetes.io/docs/concepts/containers/images#updating-images'
+                                          type: string
                                         imagePullSecret:
                                           description: ImagePullSecret is the name
                                             of the Docker registry secret required
@@ -7690,7 +7702,14 @@ spec:
                                                         description: Image that contains
                                                           initrd / kernel files.
                                                         type: string
-                                                      imagePullPolicy: IfNotPresent
+                                                      imagePullPolicy:
+                                                        description: 'Image pull policy.
+                                                          One of Always, Never, IfNotPresent.
+                                                          Defaults to Always if :latest
+                                                          tag is specified, or IfNotPresent
+                                                          otherwise. Cannot be updated.
+                                                          More info: https://kubernetes.io/docs/concepts/containers/images#updating-images'
+                                                        type: string
                                                       imagePullSecret:
                                                         description: ImagePullSecret
                                                           is the name of the Docker
@@ -8426,7 +8445,14 @@ spec:
                                                   description: Image is the name of
                                                     the image with the embedded disk.
                                                   type: string
-                                                imagePullPolicy: IfNotPresent
+                                                imagePullPolicy:
+                                                  description: 'Image pull policy.
+                                                    One of Always, Never, IfNotPresent.
+                                                    Defaults to Always if :latest
+                                                    tag is specified, or IfNotPresent
+                                                    otherwise. Cannot be updated.
+                                                    More info: https://kubernetes.io/docs/concepts/containers/images#updating-images'
+                                                  type: string
                                                 imagePullSecret:
                                                   description: ImagePullSecret is
                                                     the name of the Docker registry

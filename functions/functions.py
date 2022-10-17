@@ -1,4 +1,5 @@
-# import re
+import re
+# import validators
 
 class MyYaml:
     def __init__(self, totalLen, lines):
@@ -22,7 +23,9 @@ class MyYaml:
                 print(self.lines[self.index],end="")
                 fSpace = self.findFrontSpace(self.lines[self.index])
                 # print(line.find("image:"))
-                self.findNextTag(fSpace)
+                if self.isImageTagLink():
+                    print("Found a Link")
+                    self.findNextTag(fSpace)
             self.index+=1
         return self.lines
 
@@ -47,6 +50,7 @@ class MyYaml:
                 self.changeValueOfTagCase1()
             else: 
                 print("No Changes")
+                self.checkChangeValueCase3()
             print(line, end="")
         else:
             print(False)
@@ -70,11 +74,30 @@ class MyYaml:
             # self.totalLen -= 1
 
     # case 2
-    #   if imagePullPolicy has someother child tag del it and put  ifNotPresent
+    #   if imagePullPolicy not present
     def insertTagCase2(self):
         offset = self.findFrontSpace(self.lines[self.index-1])
         val = ' '*offset + "imagePullPolicy: IfNotPresent\n"
         self.lines.insert(self.index, val) 
 
 
+    # case 3
+    # if imagePullPolicy does not have IfNotPresent
+    def checkChangeValueCase3(self):
+        line = self.lines[self.index]
+        if "IfNotPresent" not in line:
+            self.lines.pop(self.index)
+            self.insertTagCase2()
 
+    def isImageTagLink(self):
+        s = self.lines[self.index]
+        st = s[self.findFrontSpace(s)+7:]
+        print(st)
+        if re.match('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{4,5}', st) != None:
+            return True
+        else:
+            return False
+        # return True
+
+
+        
