@@ -1,5 +1,4 @@
 import re
-# import validators
 
 class MyYaml:
     def __init__(self, totalLen, lines):
@@ -20,12 +19,14 @@ class MyYaml:
             # print(self.index," - ",len(self.lines))
             # print(self.lines[self.index])
             if "image:" in self.lines[self.index]:
-                print(self.lines[self.index],end="")
+                # print("Found a Line With Image Tag: ",self.lines[self.index],end="")
+                print("Found a Line With Image Tag in Line No.",self.index,end="")
                 fSpace = self.findFrontSpace(self.lines[self.index])
                 # print(line.find("image:"))
                 if self.isImageTagLink():
-                    print("Found a Link")
+                    print("\n"," "*4,"- This tag has a Link",end="")
                     self.findNextTag(fSpace)
+                print("  --> Done\n")
             self.index+=1
         return self.lines
 
@@ -38,22 +39,22 @@ class MyYaml:
         while self.findFrontSpace(line) > fSpace:
             self.index+=1
             line = self.lines[self.index]
-        print(line)
+        # print("Next Tag: ",line)
+        print("\n"," "*4,"- Next Tag:",self.index,end="")
         self.matchNextTag()
         
     # Matching the next tag and if it has imagePullPolicy then get the value of it
     def matchNextTag(self, tag="imagePullPolicy:"):
         line = self.lines[self.index]
         if tag in line:
+            print("\n"," "*4,"- It is a imagePullPolicy tag:",end="")
             if line.strip() == tag:
-                print("ooh ic")
+                print("\n"," "*4,"It has sub tags",end="")
                 self.changeValueOfTagCase1()
             else: 
-                print("No Changes")
                 self.checkChangeValueCase3()
-            print(line, end="")
+            # print(line, end="")
         else:
-            print(False)
             self.insertTagCase2()
 
     # case 1
@@ -66,7 +67,7 @@ class MyYaml:
         line = self.lines[self.index]
         # print(line)
         while fSp < self.findFrontSpace(line):
-            print(line, end="")
+            # print(line, end="hi")
             # i+=1
             # line = self.lines[i]
             self.lines.pop(self.index)
@@ -86,13 +87,16 @@ class MyYaml:
     def checkChangeValueCase3(self):
         line = self.lines[self.index]
         if "IfNotPresent" not in line:
+            print("\n"," "*4,"- Tag imagePullPolicy does not have IfNotPresent", end="")
             self.lines.pop(self.index)
             self.insertTagCase2()
+        else:
+            print("\n"," "*4,"- Tag imagePullPolicy have IfNotPresent",end="")
 
     def isImageTagLink(self):
         s = self.lines[self.index]
         st = s[self.findFrontSpace(s)+7:]
-        print(st)
+        # print(st)
         if re.match('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{4,5}', st) != None:
             return True
         else:
