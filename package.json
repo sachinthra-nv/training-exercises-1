@@ -8,7 +8,7 @@
     "start": "python3 src/app.py src/data/capk.yaml",
     "dev": "python3 src/temp/app3.py",
     "testpy": "python3 src/temp/test.py",
-    "test": "chmod +x testing/test.sh && testing/test.sh"
+    "test": "chmod +x tests/test.sh && tests/test.sh"
   },
   "repository": {
     "type": "git",
