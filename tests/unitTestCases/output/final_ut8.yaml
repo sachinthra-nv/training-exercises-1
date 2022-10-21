@@ -1,0 +1,7 @@
+container:
+  description: Contains Image tag with a Link as value.
+    also has imagePullPolicy with value as ifNotPresent.
+  properties:
+    image: 16.182.16.160:32000/capk-manager-amd64:dev
+    imagePullPolicy: IfNotPresent
+properties: xyz

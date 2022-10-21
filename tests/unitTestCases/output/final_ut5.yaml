@@ -1,0 +1,7 @@
+container:
+  description: Contains Image tag with a Link as value.
+    Without a next tag in same level.
+  properties:
+    image: 16.182.16.160:32000/gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+    imagePullPolicy: IfNotPresent
+properties: xyz

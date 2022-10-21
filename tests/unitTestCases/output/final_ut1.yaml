@@ -1,0 +1,9 @@
+container:
+  description: Contains Image tag with description
+    tag in it. Without ImagePullPolicy
+  properties:
+    image:
+      description: Image that contains initrd
+        / kernel files.
+      type: string
+properties: xyz

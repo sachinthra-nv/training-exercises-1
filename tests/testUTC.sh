@@ -2,8 +2,8 @@
 # cat src/data/final.yaml | grep imagePullPolicy: | wc -l
 # cat src/data/capk.yaml | grep imagePullPolicy: | wc -l
 
-BASE_INPUT="src/data"
-BASE_OUTPUT="src/data"
+BASE_INPUT="tests/unitTestCases/input"
+BASE_OUTPUT="tests/unitTestCases/output"
 declare -i failed=0
 
 
@@ -46,11 +46,12 @@ function testUT2() {
 function unitTeseCase()
 {
     # $1 contains the index
-    FROM="$BASE_INPUT/$1.yaml"
-    TO="$BASE_OUTPUT/$2.yaml"
+    FROM="$BASE_INPUT/ut$1.yaml"
+    TO="$BASE_OUTPUT/final_ut$1.yaml"
 
+    # echo Compa $FROM $TO 
     echo "\n=================================================="
-    echo "Tests between $1.yaml and $2.yaml file"
+    echo "Unit Tests for ut$i.yaml file"
     testUT1 $FROM $TO 
     testUT2 $FROM $TO 
 
@@ -63,7 +64,11 @@ echo "Unit Test 1 - Number of image Tag"
 echo "Unit Test 2 - Number of imagePullPolicy Tag Changed/Added"
 echo "=================================================="
 
-unitTeseCase "capk" "final"
+
+for i in $(seq 1 1 10)
+do
+    unitTeseCase $i
+done
 
 echo "\n=================================================="
 echo "TestCases Failed: $failed"
