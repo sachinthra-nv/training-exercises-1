@@ -51,7 +51,7 @@ function unitTeseCase()
 
     # echo Compa $FROM $TO 
     echo "\n=================================================="
-    echo "Unit Tests for ut$i.yaml file"
+    echo "Unit Tests for ut$1.yaml file"
     testUT1 $FROM $TO 
     testUT2 $FROM $TO 
 
