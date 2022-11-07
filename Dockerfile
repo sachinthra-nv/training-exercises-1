@@ -12,7 +12,7 @@ RUN apt-get update
 RUN apt-get install -y python3.8 python3-pip
 
 # ADD . /export
-# COPY . /export
+COPY . /export
 # WORKDIR /export
 
 # RUN chmod +x entry.sh

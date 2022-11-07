@@ -1,11 +1,16 @@
+# module for regular expression
 import re
 
 class MyYaml:
     def __init__(self, totalLen, lines):
+        # index has the current line number and lines will have all the lines for the input file.
         self.index = 0
         self.lines = lines
         
-
+    # this function will find the image tags and calls the findNextTag. This will loop through every 
+    # lines and find the image tag is available or not. if available it will find the front space and 
+    # call the findNextTag function.
+  
     def findTags(self, tag): 
         # for line in lines:
         # totalLen = len(lines)
@@ -30,9 +35,13 @@ class MyYaml:
             self.index+=1
         return self.lines
 
+    # this will return the no of front spaces in the string passed to it.
     def findFrontSpace(self, s):
         return len(s) - len(s.lstrip())
 
+    # This function will finf the next tage to the current line by calculating the front spaces.
+    # So, this will run a while loop until it find a string which has less or equal front spaces to the previous tag
+    # if it find a string which has equal front spaces the we can conclude that it the next tag to the image tag.
     def findNextTag(self, fSpace):
         self.index += 1
         line = self.lines[self.index]
@@ -43,7 +52,8 @@ class MyYaml:
         print("\n"," "*4,"- Next Tag:",self.index,end="")
         self.matchNextTag()
         
-    # Matching the next tag and if it has imagePullPolicy then get the value of it
+    # if current line has imagePullPolicy then get the value of it and check if it is a imagePullPolicy 
+    # or not. Then it calls the case functions accordingly
     def matchNextTag(self, tag="imagePullPolicy:"):
         line = self.lines[self.index]
         if tag in line:
@@ -58,7 +68,7 @@ class MyYaml:
             self.insertTagCase2()
 
     # case 1
-    #   if imagePullPolicy has someother child tag del it and put  ifNotPresent
+    #   if imagePullPolicy has someother child tag del it and put ifNotPresent
     def changeValueOfTagCase1(self):
         fSp = self.findFrontSpace(self.lines[self.index])
         #  IfNotPresent
@@ -76,7 +86,7 @@ class MyYaml:
         
 
     # case 2
-    #   if imagePullPolicy not present
+    #   if imagePullPolicy not present then add imagePullPolicy line.
     def insertTagCase2(self):
         offset = self.findFrontSpace(self.lines[self.index-1])
         val = ' '*offset + "imagePullPolicy: IfNotPresent\n"
@@ -84,7 +94,7 @@ class MyYaml:
 
 
     # case 3
-    # if imagePullPolicy does not have IfNotPresent
+    # if imagePullPolicy does not have IfNotPresent add the line.
     def checkChangeValueCase3(self):
         line = self.lines[self.index]
         if "IfNotPresent" not in line:
@@ -94,6 +104,7 @@ class MyYaml:
         else:
             print("\n"," "*4,"- Tag imagePullPolicy have IfNotPresent",end="")
 
+    # This function checks ifthe given string is a link or not.
     def isImageTagLink(self):
         s = self.lines[self.index]
         st = s[self.findFrontSpace(s)+7:]
