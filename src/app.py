@@ -10,6 +10,9 @@ import sys
 # MyYaml is the class i created in the functions folder
 from functions.functions import MyYaml
 
+# add globals for every string
+# var naming
+
 # Main function
 # This function reads the input file using the link given in as arguments in the run command
 # python3 src/app.py Source_Data_File_Path [Destination_Data_File_Path]

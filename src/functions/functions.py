@@ -1,6 +1,9 @@
 # module for regular expression
 import re
 
+# copyrights 
+# debug mode
+
 class MyYaml:
     def __init__(self, totalLen, lines):
         # index has the current line number and lines will have all the lines for the input file.
