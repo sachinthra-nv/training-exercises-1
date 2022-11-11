@@ -55,14 +55,19 @@ function unitTeseCase()
     testUT2 $FROM $TO 
 
     return 1
-\
+}
 
 echo "=================================================="
 echo "Unit Test 1 - Number of image Tag"
 echo "Unit Test 2 - Number of imagePullPolicy Tag Changed/Added"
 echo "=================================================="
 
-unitTeseCase "capk" "final"
+echo Base Input  : $BASE_INPUT
+read BASE_INPUT_FILE
+echo Base Output : $BASE_OUTPUT
+read BASE_OUTPUT_FILE
+unitTeseCase "$BASE_INPUT_FILE" "$BASE_OUTPUT_FILE"
+# unitTeseCase "capk" "final"
 
 echo "\n=================================================="
 echo "TestCases Failed: $failed"
