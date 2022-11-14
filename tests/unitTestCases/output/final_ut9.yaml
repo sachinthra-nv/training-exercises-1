@@ -4,5 +4,6 @@ container:
     the level of imagePullPolicy is one less than image.
   properties:
     image: 16.182.16.160:32000/capk-manager-amd64:dev
+    imagePullPolicy: IfNotPresent
   imagePullPolicy: IfNotPresent
 properties: xyz

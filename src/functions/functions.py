@@ -8,29 +8,25 @@ __version__ = "1.0"
 # module for regular expression
 import re
 
-# copyrights 
-# debug mode
-
-searchTag = "image:"
-addTag = "imagePullPolicy:"
-addedTagValue = "IfNotPresent"
-debugMode=True
-
-def printIfDebugOn(*msg,end="\n",debugMode=True):
-    if debugMode:
-        print(*msg,end=end)
-
 class FindEditAddTags:
-    def __init__(self, totalLen, lines):
+    def __init__(self, totalLen, lines, debugMode, searchTag, addTag, addedTagValue):
         # currLineIndex has the current line number and lines will have all the lines for the input file.
         self.currLineIndex = 0
         self.lines = lines
+        self.debugMode = debugMode
+        self.searchTag = searchTag
+        self.addTag = addTag
+        self.addedTagValue = addedTagValue
+
+    def printIfDebugOn(self, *msg, end="\n"):
+        if self.debugMode:
+           print(*msg, end=end)
         
     # this function will find the image tags and calls the findNextTag. This will loop through every 
     # lines and find the image tag is available or not. if available it will find the front space and 
     # call the findNextTag function.
   
-    def findTags(self, tag=searchTag): 
+    def findTags(self): 
         # for line in lines:
         # totalLen = len(lines)
         # for i in range(0,len(self.lines)):
@@ -39,18 +35,18 @@ class FindEditAddTags:
             # print(file1.readline())
             # findNextTag(file1)
             # break
-            # if re.search(searchTag, line):
+            # if re.search(self.searchTag, line):
             # print(self.currLineIndex," - ",len(self.lines))
             # print(self.lines[self.currLineIndex])
-            if searchTag in self.lines[self.currLineIndex]:
+            if self.searchTag in self.lines[self.currLineIndex]:
                 # print("Found a Line With Image Tag: ",self.lines[self.currLineIndex],end="")
-                printIfDebugOn("Found a Line With " + searchTag + " Tag in Line No.:",self.currLineIndex,end="")
+                self.printIfDebugOn("Found a Line With " + self.searchTag + " Tag in Line No.:",self.currLineIndex,end="")
                 fSpace = self.findFrontSpace(self.lines[self.currLineIndex])
-                # print(line.find(searchTag))
+                # print(line.find(self.searchTag))
                 if self.isImageTagLink():
-                    printIfDebugOn("\n"," "*4,"- This tag has a Link",end="")
+                    self.printIfDebugOn("\n"," "*4,"- This tag has a Link",end="")
                     self.findNextTag(fSpace)
-                printIfDebugOn("  --> Done\n")
+                self.printIfDebugOn("  --> Done\n")
             self.currLineIndex+=1
         return self.lines
 
@@ -68,21 +64,25 @@ class FindEditAddTags:
             self.currLineIndex+=1
             line = self.lines[self.currLineIndex]
         # print("Next Tag: ",line)
-        printIfDebugOn("\n"," "*4,"- Next Tag:",self.currLineIndex,end="")
-        self.matchNextTag()
+        self.printIfDebugOn("\n"," "*4,"- Next Tag:",self.currLineIndex,end="")
+        self.matchNextTag(fSpace)
         
     # if current line has imagePullPolicy then get the value of it and check if it is a imagePullPolicy 
     # or not. Then it calls the case functions accordingly
-    def matchNextTag(self, tag=addTag):
+    def matchNextTag(self, fSpace):
         line = self.lines[self.currLineIndex]
-        if tag in line:
-            printIfDebugOn("\n"," "*4,"- It is a "+addTag+" tag",end="")
-            if line.strip() == tag:
-                printIfDebugOn("\n"," "*4,"It has sub tags",end="")
-                self.changeValueOfTagCase1()
-            else: 
-                self.checkChangeValueCase3()
-            # print(line, end="")
+        
+        if self.addTag in line:
+            if fSpace == self.findFrontSpace(line):
+                self.printIfDebugOn("\n"," "*4,"- It is a "+self.addTag+" tag",end="")
+                if line.strip() == self.addTag:
+                    self.printIfDebugOn("\n"," "*4,"It has sub tags",end="")
+                    self.changeValueOfTagCase1()
+                else: 
+                    self.checkChangeValueCase3()
+               # print(line, end="")
+            else:
+                self.insertTagCase2()
         else:
             self.insertTagCase2()
 
@@ -91,7 +91,7 @@ class FindEditAddTags:
     def changeValueOfTagCase1(self):
         fSp = self.findFrontSpace(self.lines[self.currLineIndex])
         #  IfNotPresent
-        self.lines[self.currLineIndex] = self.lines[self.currLineIndex][0:len(self.lines[self.currLineIndex])-1] + " "+addedTagValue+"\n"
+        self.lines[self.currLineIndex] = self.lines[self.currLineIndex][0:len(self.lines[self.currLineIndex])-1] + " "+self.addedTagValue+"\n"
         self.currLineIndex+=1
         line = self.lines[self.currLineIndex]
         # print(line)
@@ -108,7 +108,7 @@ class FindEditAddTags:
     #   if imagePullPolicy not present then add imagePullPolicy line.
     def insertTagCase2(self):
         offset = self.findFrontSpace(self.lines[self.currLineIndex-1])
-        val = ' '*offset + addTag + " "+addedTagValue+"\n"
+        val = ' '*offset + self.addTag + " "+self.addedTagValue+"\n"
         self.lines.insert(self.currLineIndex, val) 
 
 
@@ -117,11 +117,11 @@ class FindEditAddTags:
     def checkChangeValueCase3(self):
         line = self.lines[self.currLineIndex]
         if "IfNotPresent" not in line:
-            printIfDebugOn("\n"," "*4,"- Tag "+addTag+" does not have "+addedTagValue+"", end="")
+            self.printIfDebugOn("\n"," "*4,"- Tag "+self.addTag+" does not have "+self.addedTagValue+"", end="")
             self.lines.pop(self.currLineIndex)
             self.insertTagCase2()
         else:
-            printIfDebugOn("\n"," "*4,"- Tag "+addTag+" have IfNotPresent",end="")
+            self.printIfDebugOn("\n"," "*4,"- Tag "+self.addTag+" have IfNotPresent",end="")
 
     # This function checks ifthe given string is a link or not.
     def isImageTagLink(self):

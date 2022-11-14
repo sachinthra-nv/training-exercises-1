@@ -16,6 +16,9 @@ from functions.functions import FindEditAddTags
 # Globals
 destination_path='src/data/final.yaml'
 searchTag = "image:"
+addTag = "imagePullPolicy:"
+addedTagValue = "IfNotPresent"
+debugMode = True
 
 # Main function
 # This function reads the input file using the link given in as arguments in the run command
@@ -31,10 +34,10 @@ def main():
             lines = file1.readlines()
 
             # Creating a FindEditAddTags Class Object.
-            v = FindEditAddTags(len(lines), lines)
+            v = FindEditAddTags(len(lines), lines, debugMode,searchTag,addTag ,addedTagValue)
 
             # Call the function findTags which is in the FindEditAddTags class.
-            lines = v.findTags(searchTag)
+            lines = v.findTags()
 
             # This checks the user gave the destination location if not it will use the default location. 
             outFile = sys.argv[2] if len(sys.argv)==3 else destination_path
